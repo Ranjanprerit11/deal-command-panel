@@ -7,8 +7,6 @@
 
 A powerful Salesforce Lightning Web Component that gives sales reps a comprehensive "command panel" to diagnose deal health and execute next actions quickly — right from the Opportunity record page.
 
-![Deal Command Panel Preview](docs/images/preview.png)
-
 ---
 
 ## Features
