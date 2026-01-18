@@ -134,17 +134,9 @@ The AI Assist feature provides intelligent deal analysis and email drafting powe
 3. Click **New** under "Default Organization Level Value"
 4. Fill in:
    - **API Key**: Your OpenAI API key
-   - **Model**: `gpt-4o-mini` (recommended)
+   - **Model**: `gpt-5-mini-2025-08-07` (recommended)
    - **Endpoint**: `https://api.openai.com/v1/chat/completions`
 5. Click **Save**
-
-### Supported Models
-
-| Model | Quality | Speed | Cost |
-|-------|---------|-------|------|
-| `gpt-4o-mini` | Good | Fast | $ |
-| `gpt-4o` | Excellent | Medium | $$ |
-| `gpt-4-turbo` | Excellent | Medium | $$$ |
 
 > **Demo Mode**: The component works without OpenAI configuration using built-in mock responses. A badge indicates the current mode.
 
