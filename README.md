@@ -43,7 +43,7 @@ A powerful Salesforce Lightning Web Component that gives sales reps a comprehens
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/deal-command-panel.git
+git clone https://github.com/Ranjanprerit11/deal-command-panel.git
 cd deal-command-panel
 
 # Authenticate with your Salesforce org
