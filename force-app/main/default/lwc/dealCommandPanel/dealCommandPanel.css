@@ -1,0 +1,39 @@
+/* Deal Command Panel Styles */
+
+.header-metric {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background-color: var(--slds-g-color-neutral-base-95, #f3f3f3);
+    border-radius: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--slds-g-color-neutral-base-50, #706e6b);
+    text-transform: uppercase;
+    letter-spacing: 0.025rem;
+}
+
+.metric-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--slds-g-color-neutral-base-10, #181818);
+    margin-top: 0.25rem;
+}
+
+.ai-toggle-btn {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .header-metric {
+        margin-bottom: 0.5rem;
+    }
+    
+    .metric-value {
+        font-size: 0.875rem;
+    }
+}

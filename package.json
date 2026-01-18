@@ -1,0 +1,29 @@
+{
+  "name": "deal-command-panel",
+  "version": "1.0.0",
+  "description": "Deal Command Panel LWC for Opportunity health scoring and quick actions",
+  "scripts": {
+    "lint": "eslint **/lwc/**/*.js",
+    "test": "npm run test:unit",
+    "test:unit": "sfdx-lwc-jest",
+    "test:unit:watch": "sfdx-lwc-jest --watch",
+    "test:unit:debug": "sfdx-lwc-jest --debug",
+    "test:unit:coverage": "sfdx-lwc-jest --coverage"
+  },
+  "devDependencies": {
+    "@lwc/eslint-plugin-lwc": "^1.7.2",
+    "@salesforce/eslint-config-lwc": "^3.5.3",
+    "@salesforce/eslint-plugin-aura": "^2.1.0",
+    "@salesforce/eslint-plugin-lightning": "^1.0.0",
+    "@salesforce/sfdx-lwc-jest": "^3.1.0",
+    "eslint": "^8.57.0"
+  },
+  "lint-staged": {
+    "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
+      "prettier --write"
+    ],
+    "**/lwc/**/*.js": [
+      "eslint"
+    ]
+  }
+}

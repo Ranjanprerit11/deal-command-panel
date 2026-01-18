@@ -1,0 +1,44 @@
+<template>
+    <template lwc:if={hasItems}>
+        <ul class="slds-has-dividers_bottom-space checklist-container">
+            <template for:each={processedItems} for:item="item">
+                <li key={item.id} class={item.itemClass}>
+                    <div class="slds-grid slds-grid_vertical-align-center slds-p-vertical_x-small">
+                        <div class="slds-col slds-size_1-of-12">
+                            <lightning-icon 
+                                icon-name={item.iconName} 
+                                size="x-small"
+                                variant={item.iconVariant}
+                                class="checklist-icon">
+                            </lightning-icon>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12 slds-p-left_small">
+                            <span class="checklist-label">{item.label}</span>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12 slds-text-align_right">
+                            <template lwc:if={item.showFixButton}>
+                                <lightning-button
+                                    variant="brand"
+                                    label={item.fixButtonLabel}
+                                    size="small"
+                                    data-id={item.id}
+                                    data-action={item.actionType}
+                                    onclick={handleFixClick}>
+                                </lightning-button>
+                            </template>
+                            <template lwc:else>
+                                <lightning-badge label="Review" class="info-badge"></lightning-badge>
+                            </template>
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </template>
+    <template lwc:else>
+        <div class="slds-text-align_center slds-p-around_medium slds-text-color_weak">
+            <lightning-icon icon-name="utility:check" size="small" class="slds-m-bottom_small"></lightning-icon>
+            <p>All checks passed! This deal is in good shape.</p>
+        </div>
+    </template>
+</template>

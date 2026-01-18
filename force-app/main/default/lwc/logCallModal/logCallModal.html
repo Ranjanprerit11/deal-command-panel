@@ -1,0 +1,63 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container" onclick={handleModalClick}>
+            <!-- Header -->
+            <header class="slds-modal__header">
+                <lightning-button-icon
+                    icon-name="utility:close"
+                    variant="bare-inverse"
+                    alternative-text="Close"
+                    class="slds-modal__close"
+                    onclick={handleClose}>
+                </lightning-button-icon>
+                <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Log a Call</h2>
+            </header>
+            
+            <!-- Body -->
+            <div class="slds-modal__content slds-p-around_medium">
+                <lightning-input
+                    type="text"
+                    label="Subject"
+                    value={subject}
+                    onchange={handleSubjectChange}
+                    required
+                    placeholder="e.g., Follow-up call, Discovery call"
+                    class="slds-m-bottom_small">
+                </lightning-input>
+                
+                <lightning-combobox
+                    label="Call Result"
+                    value={callResult}
+                    options={callResultOptions}
+                    onchange={handleCallResultChange}
+                    placeholder="Select result..."
+                    class="slds-m-bottom_small">
+                </lightning-combobox>
+                
+                <lightning-textarea
+                    label="Notes"
+                    value={notes}
+                    onchange={handleNotesChange}
+                    placeholder="Enter call notes and key discussion points...">
+                </lightning-textarea>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="slds-modal__footer">
+                <lightning-button
+                    variant="neutral"
+                    label="Cancel"
+                    onclick={handleClose}>
+                </lightning-button>
+                <lightning-button
+                    variant="brand"
+                    label="Log Call"
+                    onclick={handleSave}
+                    disabled={isSubmitDisabled}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" onclick={handleClose}></div>
+</template>

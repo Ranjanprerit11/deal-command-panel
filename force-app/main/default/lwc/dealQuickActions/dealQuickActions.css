@@ -1,0 +1,48 @@
+/* Quick Actions Styles */
+
+.quick-actions-container {
+    padding: 0;
+}
+
+.full-width-button {
+    width: 100%;
+}
+
+.full-width-button lightning-button {
+    width: 100%;
+}
+
+.full-width-button button {
+    width: 100%;
+}
+
+.next-step-section {
+    border-radius: 0.25rem;
+}
+
+.next-step-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.05rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.next-step-value {
+    font-size: 0.875rem;
+    color: var(--slds-g-color-neutral-base-10, #181818);
+    margin: 0;
+}
+
+.next-step-empty {
+    font-size: 0.875rem;
+    color: var(--slds-g-color-neutral-base-50, #706e6b);
+    font-style: italic;
+    margin: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .slds-col.slds-size_1-of-2 {
+        padding-bottom: 0.25rem;
+    }
+}

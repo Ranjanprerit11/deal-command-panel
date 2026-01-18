@@ -1,0 +1,14 @@
+/* Create Task Modal Styles */
+
+.slds-modal__header {
+    background-color: var(--slds-g-color-brand-base-50, #0176d3);
+    color: white;
+}
+
+.slds-modal__title {
+    color: white;
+}
+
+.slds-modal__content {
+    overflow: visible;
+}

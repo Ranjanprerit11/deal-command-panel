@@ -1,0 +1,163 @@
+<template>
+    <lightning-card title="Deal Command Panel" icon-name="standard:opportunity">
+        <!-- Loading Spinner -->
+        <template lwc:if={isLoading}>
+            <div class="slds-p-around_large slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template lwc:elseif={hasError}>
+            <div class="slds-p-around_medium">
+                <div class="slds-illustration slds-illustration_small">
+                    <div class="slds-text-color_weak slds-text-align_center">
+                        <lightning-icon icon-name="utility:error" size="large" variant="error"></lightning-icon>
+                        <p class="slds-m-top_small">{error}</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Main Content -->
+        <template lwc:elseif={hasData}>
+            <!-- Header Section -->
+            <div class="slds-p-horizontal_medium slds-p-top_small">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                        <div class="slds-grid slds-wrap slds-gutters_x-small">
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <div class="header-metric">
+                                    <span class="metric-label">Amount</span>
+                                    <span class="metric-value">{opportunityAmount}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <div class="header-metric">
+                                    <span class="metric-label">Stage</span>
+                                    <span class="metric-value">{opportunityStage}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <div class="header-metric">
+                                    <span class="metric-label">Close Date</span>
+                                    <span class="metric-value">{opportunityCloseDate}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <div class="header-metric">
+                                    <span class="metric-label">Health Score</span>
+                                    <span class="metric-value">{healthScore}/100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-top_small slds-medium-m-top_none">
+                        <div class="slds-align_absolute-center slds-medium-align_absolute-center">
+                            <c-deal-health-badge health-label={healthLabel} health-score={healthScore}></c-deal-health-badge>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signals Section -->
+            <div class="slds-p-around_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">Deal Signals</h3>
+                <div class="slds-grid slds-wrap slds-gutters_small">
+                    <template for:each={signals} for:item="signal">
+                        <div key={signal.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_small">
+                            <c-deal-signal-card
+                                signal-id={signal.id}
+                                signal-name={signal.name}
+                                signal-value={signal.value}
+                                icon-name={signal.icon}
+                                severity={signal.severity}>
+                            </c-deal-signal-card>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Action Checklist Section -->
+            <template lwc:if={hasChecklistItems}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Action Checklist</h3>
+                    <c-deal-checklist 
+                        items={checklistItems}
+                        onchecklistaction={handleChecklistAction}>
+                    </c-deal-checklist>
+                </div>
+            </template>
+
+            <!-- Quick Actions Section -->
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">Quick Actions</h3>
+                <c-deal-quick-actions
+                    next-step-value={nextStepValue}
+                    is-editing-next-step={isEditingNextStep}
+                    ontaskcreate={handleTaskModalOpen}
+                    onlogcall={handleCallModalOpen}
+                    oneditnextstep={handleEditNextStep}
+                    onsavenextstep={handleSaveNextStep}
+                    oncancelnextstep={handleCancelNextStepEdit}
+                    onnextstepchange={handleNextStepChange}>
+                </c-deal-quick-actions>
+            </div>
+
+            <!-- Recent Activities Section -->
+            <template lwc:if={hasRecentActivities}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Recent Activities</h3>
+                    <ul class="slds-has-dividers_bottom-space">
+                        <template for:each={recentActivities} for:item="activity">
+                            <li key={activity.activityId} class="slds-item">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <lightning-icon 
+                                        icon-name="utility:task" 
+                                        size="x-small" 
+                                        class="slds-m-right_small">
+                                    </lightning-icon>
+                                    <div>
+                                        <p class="slds-text-body_regular">{activity.subject}</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">
+                                            {activity.activityType} - {activity.activityDate}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+            <!-- AI Assist Section (Collapsible) -->
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <button 
+                    class="slds-button slds-button_neutral slds-m-bottom_small ai-toggle-btn"
+                    onclick={toggleAiSection}>
+                    <lightning-icon icon-name={aiSectionIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                    AI Assist
+                </button>
+                <template lwc:if={isAiSectionExpanded}>
+                    <c-deal-ai-assist record-id={recordId}></c-deal-ai-assist>
+                </template>
+            </div>
+        </template>
+
+        <!-- Task Modal -->
+        <template lwc:if={showTaskModal}>
+            <c-create-task-modal
+                onclose={handleTaskModalClose}
+                onsave={handleTaskCreated}>
+            </c-create-task-modal>
+        </template>
+
+        <!-- Log Call Modal -->
+        <template lwc:if={showCallModal}>
+            <c-log-call-modal
+                onclose={handleCallModalClose}
+                onsave={handleCallLogged}>
+            </c-log-call-modal>
+        </template>
+    </lightning-card>
+</template>

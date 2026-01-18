@@ -1,0 +1,37 @@
+/* Health Badge Styles */
+
+.health-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge-healthy {
+    background-color: #2e844a;
+    color: white;
+}
+
+.badge-watch {
+    background-color: #fe9339;
+    color: white;
+}
+
+.badge-at-risk {
+    background-color: #ea001e;
+    color: white;
+}
+
+.badge-unknown {
+    background-color: #706e6b;
+    color: white;
+}
+
+.badge-icon {
+    --slds-c-icon-color-foreground-default: white;
+}
+
+.badge-text {
+    line-height: 1;
+}

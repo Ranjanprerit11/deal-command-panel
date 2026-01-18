@@ -1,0 +1,65 @@
+/* Signal Card Styles */
+
+.signal-card {
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--border-color, #dddbda);
+    transition: box-shadow 0.2s ease;
+}
+
+.signal-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.severity-low {
+    --border-color: #2e844a;
+}
+
+.severity-medium {
+    --border-color: #fe9339;
+}
+
+.severity-high {
+    --border-color: #ea001e;
+}
+
+.severity-neutral {
+    --border-color: #706e6b;
+}
+
+.severity-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--indicator-bg, #f3f3f3);
+}
+
+.severity-indicator.severity-low {
+    --indicator-bg: #e8f5e9;
+}
+
+.severity-indicator.severity-medium {
+    --indicator-bg: #fff3e0;
+}
+
+.severity-indicator.severity-high {
+    --indicator-bg: #ffebee;
+}
+
+.severity-indicator.severity-neutral {
+    --indicator-bg: #f5f5f5;
+}
+
+.signal-name {
+    font-size: 0.625rem;
+    color: #706e6b;
+    letter-spacing: 0.05rem;
+    margin-bottom: 0.125rem;
+}
+
+.signal-value {
+    font-weight: 600;
+    color: #181818;
+}

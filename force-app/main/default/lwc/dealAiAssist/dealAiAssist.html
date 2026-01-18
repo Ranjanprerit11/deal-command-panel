@@ -1,0 +1,194 @@
+<template>
+    <div class="ai-assist-container">
+        <!-- AI Mode Indicator -->
+        <div class="slds-grid slds-grid_align-end slds-m-bottom_x-small">
+            <span class={aiModeClass}>
+                <lightning-icon icon-name="utility:einstein" size="xx-small"></lightning-icon>
+                {aiModeLabel}
+            </span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_small">
+                <lightning-button
+                    variant="neutral"
+                    label="Explain Risk & Suggest Next Steps"
+                    icon-name="utility:light_bulb"
+                    onclick={handleExplainRisk}
+                    disabled={isLoadingRisk}
+                    class="full-width-button">
+                </lightning-button>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_small">
+                <lightning-button
+                    variant="neutral"
+                    label="Draft Follow-up Email"
+                    icon-name="utility:email"
+                    onclick={handleShowEmailOptions}
+                    disabled={isLoadingEmail}
+                    class="full-width-button">
+                </lightning-button>
+            </div>
+        </div>
+
+        <!-- Email Options Panel -->
+        <template lwc:if={showEmailOptions}>
+            <div class="slds-box slds-theme_shade slds-m-bottom_small">
+                <h4 class="slds-text-heading_small slds-m-bottom_small">Email Options</h4>
+                <div class="slds-grid slds-wrap slds-gutters_small">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_small">
+                        <lightning-combobox
+                            label="Tone"
+                            value={selectedTone}
+                            options={toneOptions}
+                            onchange={handleToneChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_small">
+                        <lightning-combobox
+                            label="Goal"
+                            value={selectedGoal}
+                            options={goalOptions}
+                            onchange={handleGoalChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-m-top_small">
+                    <lightning-button
+                        variant="brand"
+                        label="Generate Email"
+                        onclick={handleDraftEmail}
+                        disabled={isLoadingEmail}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        variant="neutral"
+                        label="Cancel"
+                        onclick={handleCancelEmailOptions}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading States -->
+        <template lwc:if={isLoadingRisk}>
+            <div class="slds-align_absolute-center slds-p-around_medium">
+                <lightning-spinner alternative-text="Analyzing..." size="small"></lightning-spinner>
+                <span class="slds-m-left_small">Analyzing deal...</span>
+            </div>
+        </template>
+
+        <template lwc:if={isLoadingEmail}>
+            <div class="slds-align_absolute-center slds-p-around_medium">
+                <lightning-spinner alternative-text="Drafting..." size="small"></lightning-spinner>
+                <span class="slds-m-left_small">Drafting email...</span>
+            </div>
+        </template>
+
+        <!-- Risk Explanation Output -->
+        <template lwc:if={hasRiskExplanation}>
+            <div class="output-section slds-box slds-m-bottom_small">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                    <h4 class="slds-text-heading_small slds-grow">AI Analysis</h4>
+                    <lightning-button-icon
+                        icon-name="utility:copy"
+                        variant="bare"
+                        alternative-text="Copy"
+                        title="Copy to clipboard"
+                        onclick={handleCopyRiskSummary}
+                        class="slds-m-right_x-small">
+                    </lightning-button-icon>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        alternative-text="Clear"
+                        title="Clear"
+                        onclick={handleClearRisk}>
+                    </lightning-button-icon>
+                </div>
+
+                <!-- Risk Summary -->
+                <div class="slds-m-bottom_small">
+                    <p class="section-label">Risk Summary</p>
+                    <ul class="slds-list_dotted">
+                        <template for:each={riskSummaryItems} for:item="item">
+                            <li key={item.id}>{item.text}</li>
+                        </template>
+                    </ul>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="slds-m-bottom_small">
+                    <p class="section-label">Recommended Next Steps</p>
+                    <ul class="slds-list_dotted">
+                        <template for:each={nextStepsItems} for:item="item">
+                            <li key={item.id}>{item.text}</li>
+                        </template>
+                    </ul>
+                </div>
+
+                <!-- Questions -->
+                <div>
+                    <p class="section-label">Questions to Ask</p>
+                    <ul class="slds-list_dotted">
+                        <template for:each={questionsItems} for:item="item">
+                            <li key={item.id}>{item.text}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </template>
+
+        <!-- Email Draft Output -->
+        <template lwc:if={hasEmailDraft}>
+            <div class="output-section slds-box">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                    <h4 class="slds-text-heading_small slds-grow">Email Draft</h4>
+                    <lightning-button-icon
+                        icon-name="utility:copy"
+                        variant="bare"
+                        alternative-text="Copy"
+                        title="Copy to clipboard"
+                        onclick={handleCopyEmail}
+                        class="slds-m-right_x-small">
+                    </lightning-button-icon>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        alternative-text="Clear"
+                        title="Clear"
+                        onclick={handleClearEmail}>
+                    </lightning-button-icon>
+                </div>
+
+                <lightning-input
+                    type="text"
+                    label="Subject"
+                    value={emailDraft.emailSubject}
+                    onchange={handleEmailSubjectChange}
+                    class="slds-m-bottom_small">
+                </lightning-input>
+
+                <lightning-textarea
+                    label="Body"
+                    value={emailDraft.emailBody}
+                    onchange={handleEmailBodyChange}
+                    rows="8">
+                </lightning-textarea>
+
+                <p class="slds-text-color_weak slds-text-body_small slds-m-top_small">
+                    Edit the content above, then copy to your email client.
+                </p>
+            </div>
+        </template>
+
+        <!-- Empty State -->
+        <template lwc:if={showEmptyState}>
+            <div class="slds-text-align_center slds-p-around_medium slds-text-color_weak empty-state">
+                <lightning-icon icon-name="utility:light_bulb" size="small" class="slds-m-bottom_small"></lightning-icon>
+                <p>Click a button above to get AI-powered insights and suggestions.</p>
+            </div>
+        </template>
+    </div>
+</template>

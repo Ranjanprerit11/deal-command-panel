@@ -1,0 +1,55 @@
+/* Checklist Styles */
+
+.checklist-container {
+    background-color: var(--slds-g-color-neutral-base-100, #ffffff);
+    border-radius: 0.25rem;
+}
+
+.checklist-item {
+    padding: 0.5rem;
+    border-left: 3px solid transparent;
+    transition: background-color 0.2s ease;
+}
+
+.checklist-item:hover {
+    background-color: var(--slds-g-color-neutral-base-95, #f3f3f3);
+}
+
+.checklist-item.severity-high {
+    border-left-color: #ea001e;
+    background-color: #fff8f8;
+}
+
+.checklist-item.severity-medium {
+    border-left-color: #fe9339;
+    background-color: #fffaf5;
+}
+
+.checklist-item.severity-low {
+    border-left-color: #2e844a;
+}
+
+.checklist-icon {
+    flex-shrink: 0;
+}
+
+.checklist-label {
+    font-size: 0.875rem;
+    color: var(--slds-g-color-neutral-base-10, #181818);
+}
+
+.info-badge {
+    --slds-c-badge-color-background: #ecebea;
+    --slds-c-badge-text-color: #706e6b;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .checklist-item {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .checklist-label {
+        font-size: 0.8125rem;
+    }
+}
