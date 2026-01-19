@@ -26,8 +26,6 @@ A powerful Salesforce Lightning Web Component that gives sales reps a comprehens
 - [Testing](#testing)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -253,26 +251,3 @@ The component automatically generates checklist items:
 - AI context contains only non-sensitive summary data (no PII)
 
 ---
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Acknowledgments
-
-- Built with [Salesforce Lightning Web Components](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
-- AI powered by [OpenAI](https://openai.com)
